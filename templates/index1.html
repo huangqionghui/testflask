@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Notebook</h1>
+    <a href="{{ url_for('new_note') }}">New Note</a>
+
+    <h4>{{ notes|length }} notes:</h4>
+    <div class="container-fluid">
+        <div class="row-fluid">
+		    <div class="span12">
+			    <table class="table table-bordered table-hover">
+				    <thead>
+					    <tr>
+						    <th>名称</th>
+						    <th>环境</th>
+						    <th>地址</th>
+						    <th>操作</th>
+					    </tr>
+				    </thead>
+				    <tbody>
+					    <tr>
+						    {% for note in notes %}
+                                <div class="note">
+                                    <td>{{ note.xmname }}</td>
+                                    <td>{{ note.xmenvironment }}</td>
+                                    <td><a href={{ note.xmurl }} target="_blank">{{ note.xmurl }}</a></td>
+                                    <td><a class='btn' style="display: inline-block" href="{{ url_for('edit_note', note_id=note.id) }}">Edit</a>
+                                    <form method="post" action="{{ url_for('delete_note', note_id=note.id) }}">
+                                        {{ form.csrf_token }}
+                                        {{ form.submit(class='btn',style="display: inline-block;float:right") }}
+                                    </form></td>
+                                </div>
+					    </tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
